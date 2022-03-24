@@ -1,3 +1,4 @@
+from sql import *
 from selenium import webdriver
 from bs4 import BeautifulSoup
 import requests
@@ -55,9 +56,17 @@ t = "".join(a)
 a = re.sub("( ){2,}", " ", t)
 hinnad = a.split(" ")
 
+kinnisvara = []
 a = 0
 b = 1
+d = 0
+e = 0
+print("-------------------------------------")
+print("Praegune kinnisvara info")
+print("-------------------------------------")
 while a < len(nimed):
+    nimi = nimed[a][0].replace("  ", "")
+    kinnisvara.append([nimi, hinnad[b], lingid2[a]])
     print(nimed[a][0].replace("  ", "") + " | Hind: " + hinnad[b] + " € | Link: " + lingid2[a])
     a += 1
     b += 1
