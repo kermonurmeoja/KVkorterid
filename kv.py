@@ -1,4 +1,3 @@
-from sql import *
 from selenium import webdriver
 from bs4 import BeautifulSoup
 import requests
@@ -67,6 +66,28 @@ print("-------------------------------------")
 while a < len(nimed):
     nimi = nimed[a][0].replace("  ", "")
     kinnisvara.append([nimi, hinnad[b], lingid2[a]])
-    print(nimed[a][0].replace("  ", "") + " | Hind: " + hinnad[b] + " € | Link: " + lingid2[a])
+    #print(nimed[a][0].replace("  ", "") + " | Hind: " + hinnad[b] + " € | Link: " + lingid2[a])
     a += 1
     b += 1
+    
+
+
+print(kinnisvara)  
+#Siin on SQL db kood
+import sqlite3
+ühendus = sqlite3.connect('KVdb.db')
+c = ühendus.cursor()
+c.execute("SELECT * FROM Mustamäe")
+# 3 value
+#c.execute("INSERT INTO Mustamäe (Aadress, Hind, Link) VALUES ('x', 'x', 'x')")
+
+k2sk = "INSERT INTO Mustamäe (Aadress, Hind, Link) VALUES (?, ?, ?)"
+c.execute(k2sk, (str(kinnisvara[d][0]), str(kinnisvara[d][1]), str(kinnisvara[d][2])))
+
+
+c.close()
+
+ühendus.commit()
+
+ühendus.close()
+
