@@ -38,6 +38,11 @@ for nimi in nimed:
     a.append(nimi[1])
 # regex lingid
 lingid = re.findall('((https://)(.*)(html))', source)
+c = 0
+lingid2 = []
+while c < len(lingid):
+    lingid2.append(lingid[c][0])
+    c += 2
 
 hinnad = []
 # bsoup
@@ -53,6 +58,6 @@ hinnad = a.split(" ")
 a = 0
 b = 1
 while a < len(nimed):
-    print(nimed[a][0].replace("  ", "") + " | Hind: " + hinnad[b] + " €")
+    print(nimed[a][0].replace("  ", "") + " | Hind: " + hinnad[b] + " € | Link: " + lingid2[a])
     a += 1
     b += 1
