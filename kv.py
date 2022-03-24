@@ -34,15 +34,13 @@ source = driver.page_source
 # saab asendada neid kohti inputiga hiljem
 # regex nimed
 nimed = re.findall('((Tallinn, Mustamäe)(.*)( ))', source)
-#print(nimed)
 for nimi in nimed:
     a.append(nimi[1])
-
 # regex lingid
 lingid = re.findall('((https://)(.*)(html))', source)
-#print(lingid)
 
-# bsoup    
+hinnad = []
+# bsoup
 doc = BeautifulSoup(source, "html.parser")
 # hinna leidmine
 hind = doc.find_all("p", {"class": "object-price-value"})
@@ -50,4 +48,11 @@ a = re.findall(r'[\d ]+', str(hind))
 #print(a)
 t = "".join(a)
 a = re.sub("( ){2,}", " ", t)
-print(a.split(" "))
+hinnad = a.split(" ")
+
+a = 0
+b = 1
+while a < len(nimed):
+    print(nimed[a][0].replace("  ", "") + " | Hind: " + hinnad[b] + " €")
+    a += 1
+    b += 1
