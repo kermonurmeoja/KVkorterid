@@ -6,8 +6,11 @@ import re
 import ssl
 from fake_useragent import UserAgent
 ssl._create_default_https_context = ssl._create_unverified_context
+import os.path
+import getpass
+
 # selenium
-chromeDriver = 'C:/Users/kevin.sutt/Downloads/selenium/chromedriver.exe'
+chromeDriver = 'C:/Users/' + getpass.getuser() + '/Downloads/chromedriver.exe'
 
 def startSelenium(url):
     optionss = webdriver.ChromeOptions()
@@ -48,9 +51,3 @@ a = re.findall(r'[\d ]+', str(hind))
 t = "".join(a)
 a = re.sub("( ){2,}", " ", t)
 print(a.split(" "))
-
-    
-
-
-        
-
