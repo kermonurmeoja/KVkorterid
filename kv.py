@@ -3,14 +3,13 @@ from bs4 import BeautifulSoup
 import requests
 from urllib.request import urlopen
 import re
-import ssl
 from fake_useragent import UserAgent
-ssl._create_default_https_context = ssl._create_unverified_context
 import os.path
 import getpass
 
 # selenium
 chromeDriver = 'C:/Users/' + getpass.getuser() + '/Downloads/chromedriver.exe'
+
 
 def startSelenium(url):
     optionss = webdriver.ChromeOptions()
@@ -26,6 +25,8 @@ def startSelenium(url):
     browser.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
     browser.get(url)
     return browser
+
+
 a = []
 url = "https://www.kv.ee/?act=search.simple&company_id=237&deal_type=1&company_id_check=237&county=1&search_type=new&parish=1061&city%5B0%5D=1007"
 driver = startSelenium(url)
@@ -50,7 +51,7 @@ doc = BeautifulSoup(source, "html.parser")
 # hinna leidmine
 hind = doc.find_all("p", {"class": "object-price-value"})
 a = re.findall(r'[\d ]+', str(hind))
-#print(a)
+# print(a)
 t = "".join(a)
 a = re.sub("( ){2,}", " ", t)
 hinnad = a.split(" ")
@@ -66,28 +67,30 @@ print("-------------------------------------")
 while a < len(nimed):
     nimi = nimed[a][0].replace("  ", "")
     kinnisvara.append([nimi, hinnad[b], lingid2[a]])
-    #print(nimed[a][0].replace("  ", "") + " | Hind: " + hinnad[b] + " € | Link: " + lingid2[a])
+    # print(nimed[a][0].replace("  ", "") + " | Hind: " + hinnad[b] + " € | Link: " + lingid2[a])
     a += 1
     b += 1
-    
 
-
-print(kinnisvara)  
-#Siin on SQL db kood
+print(kinnisvara)
+# Siin on SQL db kood
 import sqlite3
+
 ühendus = sqlite3.connect('KVdb.db')
 c = ühendus.cursor()
 c.execute("SELECT * FROM Mustamäe")
 # 3 value
-#c.execute("INSERT INTO Mustamäe (Aadress, Hind, Link) VALUES ('x', 'x', 'x')")
+# c.execute("INSERT INTO Mustamäe (Aadress, Hind, Link) VALUES ('x', 'x', 'x')")
 
 k2sk = "INSERT INTO Mustamäe (Aadress, Hind, Link) VALUES (?, ?, ?)"
-c.execute(k2sk, (str(kinnisvara[d][0]), str(kinnisvara[d][1]), str(kinnisvara[d][2])))
-
+i = 0
+d = 0
+while i < len(kinnisvara):
+    c.execute(k2sk, (str(kinnisvara[d][0]), str(kinnisvara[d][1]), str(kinnisvara[d][2])))
+    d = d + 1
+    i = i + 1
 
 c.close()
 
 ühendus.commit()
 
 ühendus.close()
-
