@@ -1,8 +1,6 @@
 # KVkorterid
 
-KV KORTERITE INFORMATSIOON
-
-Allalaadimine:
+KV KORTERITE INFORMATSIOONIDE ALLALAADIMINE
 1. Python IDE allalaadimine
 2. Chromedriveri allalaadimine, link: https://chromedriver.chromium.org/downloads
 3. Koodi allalaadimine ja sisestamine kodeerimis programmi.
