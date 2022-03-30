@@ -1,6 +1,7 @@
 # KVkorterid
 
 KV KORTERITE INFORMATSIOON
+
 Allalaadimine:
 1. Python IDE allalaadimine
 2. Chromedriveri allalaadimine, link: https://chromedriver.chromium.org/downloads
